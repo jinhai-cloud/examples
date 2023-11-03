@@ -1,4 +1,4 @@
-package org.cloud;
+package org.cloud.examples.kubernetes;
 
 public class Main {
     public static void main(String[] args) {
