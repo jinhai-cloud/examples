@@ -19,7 +19,7 @@ public final class ScriptUtils {
         }
 
         if (isOnce) {
-            bindings.put("#jsr223.groovy.engine.keep.globals", "phantom");
+            bindings.put("#jsr223.groovy.engine.keep.globals", "weak");
         }
         return GROOVY.eval(script, bindings);
     }
