@@ -11,4 +11,19 @@
 
     <artifactId>kubernetes</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.cloud.examples</groupId>
+            <artifactId>commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
+    </dependencies>
 </project>
