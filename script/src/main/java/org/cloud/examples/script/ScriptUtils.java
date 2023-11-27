@@ -12,7 +12,7 @@ public final class ScriptUtils {
     private ScriptUtils() {
     }
 
-    public static Object eval(String script, Map<String, Object> map, boolean isOnce) throws ScriptException {
+    public static <V> Object eval(String script, Map<String, V> map, boolean isOnce) throws ScriptException {
         Bindings bindings = GROOVY.createBindings();
         if (map != null && !map.isEmpty()) {
             bindings.putAll(map);
