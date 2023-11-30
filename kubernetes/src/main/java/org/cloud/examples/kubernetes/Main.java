@@ -1,15 +1,10 @@
 package org.cloud.examples.kubernetes;
 
-import io.fabric8.kubernetes.client.KubernetesClient;
-import io.fabric8.kubernetes.client.server.mock.EnableKubernetesMockClient;
-import org.junit.jupiter.api.Test;
+import lombok.extern.slf4j.Slf4j;
 
-@EnableKubernetesMockClient(crud = true)
+@Slf4j
 public class Main {
-    private KubernetesClient client;
-
-    @Test
-    void testCrud() {
+    public static void main(String[] args) {
 
     }
 }
