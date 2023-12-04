@@ -21,9 +21,5 @@
             <groupId>io.fabric8</groupId>
             <artifactId>kubernetes-client</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-        </dependency>
     </dependencies>
 </project>
