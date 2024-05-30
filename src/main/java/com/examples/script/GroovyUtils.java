@@ -1,6 +1,6 @@
 package com.examples.script;
 
-import com.examples.commons.CollectionUtils;
+import org.apache.commons.collections4.MapUtils;
 
 import javax.script.Bindings;
 import javax.script.ScriptEngine;
@@ -16,7 +16,7 @@ public final class GroovyUtils {
 
     public static <V> Object eval(String script, Map<String, V> map, boolean isOnce) throws ScriptException {
         Bindings bindings = GROOVY.createBindings();
-        if (CollectionUtils.isNotEmpty(map)) {
+        if (MapUtils.isNotEmpty(map)) {
             bindings.putAll(map);
         }
 
