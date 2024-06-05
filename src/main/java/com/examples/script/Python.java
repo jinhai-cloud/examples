@@ -5,7 +5,7 @@ import pemja.core.PythonInterpreterConfig;
 
 import java.util.Objects;
 
-public class PythonUtils {
+public class Python {
     private static final PythonInterpreterConfig config = PythonInterpreterConfig
             .newBuilder()
             .setPythonExec("python3") // specify python exec

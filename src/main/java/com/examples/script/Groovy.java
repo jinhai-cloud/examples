@@ -8,10 +8,10 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.util.Map;
 
-public final class GroovyUtils {
+public final class Groovy {
     private static final ScriptEngine GROOVY = new ScriptEngineManager().getEngineByName("groovy");
 
-    private GroovyUtils() {
+    private Groovy() {
     }
 
     public static <V> Object eval(String script, Map<String, V> map, boolean isOnce) throws ScriptException {
