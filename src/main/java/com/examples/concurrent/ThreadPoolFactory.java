@@ -5,9 +5,9 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 import java.util.concurrent.*;
 
-public class ThreadPoolUtils {
+public class ThreadPoolFactory {
 
-    public ThreadPoolExecutor create(int coreSize, int maxSize, int queueSize, String namePrefix) {
+    public static ThreadPoolExecutor create(int coreSize, int maxSize, int queueSize, String namePrefix) {
         Preconditions.checkArgument(queueSize >= 0, "Wrong queue length");
 
         BlockingQueue<Runnable> blockingQueue = queueSize == 0 ?
