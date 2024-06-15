@@ -7,7 +7,7 @@ import java.util.concurrent.*;
 
 public class ThreadPoolFactory {
 
-    public static ThreadPoolExecutor create(int coreSize, int maxSize, int queueSize, String namePrefix) {
+    public static ThreadPoolExecutor create(int coreSize, int maxSize, int queueSize, String namePrefix, boolean daemon) {
         Preconditions.checkArgument(queueSize >= 0, "Wrong queue length");
 
         BlockingQueue<Runnable> blockingQueue = queueSize == 0 ?
@@ -16,13 +16,13 @@ public class ThreadPoolFactory {
 
         ThreadFactory threadFactory = new ThreadFactoryBuilder()
                 .setNameFormat(namePrefix + "-%d")
-                .setDaemon(true)
+                .setDaemon(daemon)
                 .build();
 
         return new ThreadPoolExecutor(
                 coreSize,
                 maxSize,
-                300,
+                60,
                 TimeUnit.SECONDS,
                 blockingQueue,
                 threadFactory,
