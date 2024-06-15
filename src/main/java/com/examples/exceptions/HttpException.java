@@ -1,4 +1,4 @@
-package com.examples.commons;
+package com.examples.exceptions;
 
 public class HttpException extends RuntimeException {
     public HttpException() {

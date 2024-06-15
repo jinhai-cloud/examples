@@ -1,5 +1,6 @@
 package com.examples.commons;
 
+import com.examples.exceptions.HttpException;
 import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
