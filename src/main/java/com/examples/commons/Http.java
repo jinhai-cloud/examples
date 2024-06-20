@@ -13,15 +13,18 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class Http {
 
+    // RT 100ms, QPS = 100 * 10
+    private static final int MAX_REQUESTS = 100;
     private static final OkHttpClient client;
     private static final String DEFAULT_MEDIA_TYPE = "application/json; charset=utf-8";
 
     static {
         Dispatcher dispatcher = new Dispatcher();
-        dispatcher.setMaxRequests(100);
-        dispatcher.setMaxRequestsPerHost(100);
+        dispatcher.setMaxRequests(MAX_REQUESTS);
+        dispatcher.setMaxRequestsPerHost(MAX_REQUESTS);
 
-        ConnectionPool pool = new ConnectionPool(100, 60, TimeUnit.SECONDS);
+        // 调小keepAlive时间，减少内存占用
+        ConnectionPool pool = new ConnectionPool(MAX_REQUESTS, 60, TimeUnit.SECONDS);
 
         client = new OkHttpClient.Builder()
                 .dispatcher(dispatcher)
