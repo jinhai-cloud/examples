@@ -2,6 +2,7 @@ package com.examples.concurrent;
 
 import com.google.common.base.Throwables;
 import com.google.common.util.concurrent.UncheckedExecutionException;
+import com.google.common.util.concurrent.Uninterruptibles;
 import dev.failsafe.*;
 import dev.failsafe.function.CheckedSupplier;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +41,18 @@ public class FailSafeGuard {
 
     @Test
     public void testRateLimiter() {
-
+        // bursty: 令牌桶. 限制时间内的maxPermits
+        // smooth: 漏桶. 限制时间内的maxRate
+        // 每100ms，重置为200可用令牌数
+        RateLimiter<Object> limiter = RateLimiter.burstyBuilder(200, Duration.ofMillis(100)).build();
+        for (int i = 0; i < 1000; i++) {
+            if (limiter.tryAcquirePermit()) {
+                log.info("acquire: {}", i);
+            } else {
+                log.info("wait: {}", i);
+                Uninterruptibles.sleepUninterruptibly(Duration.ofMillis(1));
+            }
+        }
     }
 
     @Test
