@@ -9,9 +9,9 @@ import java.io.UncheckedIOException;
 import java.sql.SQLException;
 import java.util.concurrent.TimeoutException;
 
-public class Exceptions {
+public class ExceptionExample {
 
-    public void sample() throws IOException {
+    public void example() throws IOException {
         try {
             throwIOException();
         } catch (IOException e) {
