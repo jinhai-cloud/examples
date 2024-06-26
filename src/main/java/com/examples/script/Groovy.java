@@ -14,13 +14,13 @@ public final class Groovy {
     private Groovy() {
     }
 
-    public static <V> Object eval(String script, Map<String, V> map, boolean isOnce) throws ScriptException {
+    public static <V> Object eval(String script, Map<String, V> map, boolean once) throws ScriptException {
         Bindings bindings = GROOVY.createBindings();
         if (MapUtils.isNotEmpty(map)) {
             bindings.putAll(map);
         }
 
-        if (isOnce) {
+        if (once) {
             bindings.put("#jsr223.groovy.engine.keep.globals", "weak");
         }
         return GROOVY.eval(script, bindings);

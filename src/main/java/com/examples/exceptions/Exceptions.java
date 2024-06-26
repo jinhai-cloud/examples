@@ -1,4 +1,4 @@
-package com.examples.commons;
+package com.examples.exceptions;
 
 import com.google.common.base.Throwables;
 import com.google.common.util.concurrent.UncheckedTimeoutException;
