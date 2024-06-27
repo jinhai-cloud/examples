@@ -3,6 +3,7 @@ package com.examples.exceptions;
 import com.google.common.base.Throwables;
 import com.google.common.util.concurrent.UncheckedTimeoutException;
 import org.apache.commons.lang3.exception.UncheckedInterruptedException;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeoutException;
 
 public class ExceptionExample {
 
+    @Test
     public void example() throws IOException {
         try {
             throwIOException();
