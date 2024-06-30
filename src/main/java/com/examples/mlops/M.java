@@ -4,11 +4,11 @@ import java.util.concurrent.CompletableFuture;
 
 public class M {
 
-    public CompletableFuture<String> callAsync(){
-
+    public <T> CompletableFuture<T> callAsync() {
+        return null;
     }
 
-    public String call(){
-
+    public <T> T call() {
+        return null;
     }
 }

@@ -57,6 +57,18 @@ public class Http {
         return doRequest(request);
     }
 
+    public static String post(String url, String json, Map<String, String> headers) {
+        Headers.Builder builder = new Headers.Builder();
+        headers.forEach(builder::add);
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(RequestBody.create(json, MediaType.parse(DEFAULT_MEDIA_TYPE)))
+                .headers(builder.build())
+                .build();
+        return doRequest(request);
+    }
+
     public static String post(String url, Map<String, String> formBody) {
         FormBody.Builder builder = new FormBody.Builder();
         formBody.forEach(builder::add);
