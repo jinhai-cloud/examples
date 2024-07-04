@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Objects;
 
 @Component
@@ -43,6 +44,10 @@ public class SpringUtils implements BeanFactoryPostProcessor, ApplicationContext
 
     public static <T> T getBean(String name, Class<T> clazz) {
         return getBeanFactory().getBean(name, clazz);
+    }
+
+    public static <T> Map<String, T> getBeansOfType(Class<T> clazz) {
+        return getBeanFactory().getBeansOfType(clazz);
     }
 
     public static String getProperty(String key) {

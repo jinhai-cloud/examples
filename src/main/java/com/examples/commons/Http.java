@@ -32,7 +32,6 @@ public class Http {
                 .connectTimeout(Duration.ofSeconds(1))
                 .readTimeout(Duration.ofSeconds(1))
                 .writeTimeout(Duration.ofSeconds(1))
-                .retryOnConnectionFailure(false)
                 .build();
     }
 

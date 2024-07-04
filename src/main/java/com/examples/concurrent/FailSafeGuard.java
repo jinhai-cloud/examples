@@ -76,6 +76,7 @@ public class FailSafeGuard {
         };
 
         try {
+            // 超时有些场景，需要实现ContextualSupplier，传入ExecutionContext到方法内部，实现onCancel方法
             Failsafe.with(timeout).get(supplier);
         } catch (FailsafeException e) {
             Throwable cause = e.getCause() != null ? e.getCause() : e;
