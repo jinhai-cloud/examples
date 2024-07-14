@@ -13,7 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class FailSafeGuard {
+public class FailsafeExample {
 
     @Test
     public void testRetry() {
