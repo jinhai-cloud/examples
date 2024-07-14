@@ -23,6 +23,25 @@ public class ThreadPoolUtils {
                 TimeUnit.SECONDS,
                 blockingQueue,
                 threadFactory,
-                new ThreadPoolExecutor.AbortPolicy());
+                new AbortPolicyWithReport(namePrefix));
+    }
+
+    public static ThreadPoolExecutor createEagerPool(int coreSize, int maxSize, int queueSize, String namePrefix, boolean daemon) {
+        ThreadFactory threadFactory = new ThreadFactoryBuilder()
+                .setNameFormat(namePrefix + "-%d")
+                .setDaemon(daemon)
+                .build();
+
+        TaskQueue<Runnable> taskQueue = new TaskQueue<>(queueSize <= 0 ? 1 : queueSize);
+        EagerThreadPoolExecutor executor = new EagerThreadPoolExecutor(
+                coreSize,
+                maxSize,
+                60,
+                TimeUnit.SECONDS,
+                taskQueue,
+                threadFactory,
+                new AbortPolicyWithReport(namePrefix));
+        taskQueue.setExecutor(executor);
+        return executor;
     }
 }

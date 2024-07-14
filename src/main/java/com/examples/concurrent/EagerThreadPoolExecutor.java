@@ -1,6 +1,5 @@
 package com.examples.concurrent;
 
-import java.util.Objects;
 import java.util.concurrent.*;
 
 /**
@@ -21,8 +20,6 @@ public class EagerThreadPoolExecutor extends ThreadPoolExecutor {
 
     @Override
     public void execute(Runnable command) {
-        Objects.requireNonNull(command);
-
         try {
             super.execute(command);
         } catch (RejectedExecutionException rx) {
