@@ -12,7 +12,7 @@ import java.util.concurrent.CompletableFuture;
 public class CompletableFutureExample {
 
     @Test
-    public void create() {
+    void create() {
         // 默认值
         CompletableFuture<String> cf1 = CompletableFuture.completedFuture("Hi");
         // 有返回值
@@ -38,7 +38,7 @@ public class CompletableFutureExample {
     }
 
     @Test
-    public void then() {
+    void then() {
         // CF完成后触发，不关心CF的返回值，无入参 & 无返回值
         CompletableFuture.supplyAsync(() -> "Hi")
                 .thenRun(() -> log.info("Hi"))
@@ -65,7 +65,7 @@ public class CompletableFutureExample {
     }
 
     @Test
-    public void combineAnd() {
+    void combineAnd() {
         // 组合上一个CF以及当前CF的结果作为入参，再执行BiFunction。有返回值
         CompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> "Hello")
                 .thenCombine(CompletableFuture.supplyAsync(() -> " World"), (t, u) -> t + u)
@@ -94,7 +94,7 @@ public class CompletableFutureExample {
     }
 
     @Test
-    public void combineOr() {
+    void combineOr() {
         // 上一个CF或自身CF，只要一个执行完就可以继续下一步的Function操作。有返回值
         CompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> "Hi")
                 .applyToEither(CompletableFuture.supplyAsync(() -> "Hello"), t -> t + "!!!");
@@ -120,7 +120,7 @@ public class CompletableFutureExample {
     }
 
     @Test
-    public void result() {
+    void result() {
         // exceptionally: 捕获上一个CF的异常，并返回新值。用于异常捕获并返回默认值
         // exceptionally里不建议throw新RuntimeException异常，走whenComplete
         CompletableFuture<String> cf1 = CompletableFuture.supplyAsync(() -> {

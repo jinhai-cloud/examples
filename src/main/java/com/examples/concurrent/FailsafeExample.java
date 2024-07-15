@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class FailsafeExample {
 
     @Test
-    public void testRetry() {
+    void testRetry() {
         RetryPolicy<String> retryPolicy = RetryPolicy.<String>builder()
                 .handle(Exception.class)
                 .handleResult(null)
@@ -35,12 +35,12 @@ public class FailsafeExample {
     }
 
     @Test
-    public void testCircuitBreaker() {
+    void testCircuitBreaker() {
 
     }
 
     @Test
-    public void testRateLimiter() {
+    void testRateLimiter() {
         // bursty: 令牌桶. 限制时间内的maxPermits
         // smooth: 漏桶. 限制时间内的maxRate
         // 每100ms，重置为200可用令牌数
@@ -56,7 +56,7 @@ public class FailsafeExample {
     }
 
     @Test
-    public void testTimeout() {
+    void testTimeout() {
         Timeout<String> timeout = Timeout.<String>builder(Duration.ofSeconds(3))
                 .withInterrupt()
                 .onSuccess(event -> {
@@ -86,12 +86,12 @@ public class FailsafeExample {
     }
 
     @Test
-    public void testBulkhead() {
+    void testBulkhead() {
 
     }
 
     @Test
-    public void testFallback() {
+    void testFallback() {
         CheckedSupplier<String> task = () -> {
             throw new RuntimeException("Remote service unavailable");
         };

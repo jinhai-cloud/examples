@@ -13,7 +13,7 @@ import java.util.concurrent.TimeoutException;
 public class ExceptionExample {
 
     @Test
-    public void example() throws IOException {
+    void example() throws IOException {
         try {
             throwIOException();
         } catch (IOException e) {

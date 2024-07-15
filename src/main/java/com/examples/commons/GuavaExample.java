@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class GuavaExample {
 
     @Test
-    public void supplier() {
+    void supplier() {
 
     }
 }
