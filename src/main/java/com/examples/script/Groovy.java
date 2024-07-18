@@ -1,5 +1,7 @@
 package com.examples.script;
 
+import com.examples.commons.Http;
+import com.examples.commons.JSON;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import com.google.common.hash.Hashing;
@@ -68,7 +70,8 @@ public final class Groovy {
         config.addCompilationCustomizers(secure);
 
         ImportCustomizer customizers = new ImportCustomizer();
-        customizers.addImports(StringUtils.class.getName(), DateTime.class.getName(), JsonPath.class.getName());
+        customizers.addImports(StringUtils.class.getName(), DateTime.class.getName(),
+                Http.class.getName(), JSON.class.getName(), JsonPath.class.getName());
         config.addCompilationCustomizers(customizers);
 
         config.addCompilationCustomizers(new ASTTransformationCustomizer(ThreadInterrupt.class));
