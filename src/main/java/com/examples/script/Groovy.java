@@ -19,6 +19,7 @@ import org.codehaus.groovy.control.customizers.ImportCustomizer;
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
 import org.codehaus.groovy.runtime.InvokerHelper;
 import org.codehaus.groovy.syntax.Types;
+import org.joda.time.DateTime;
 
 import java.nio.charset.StandardCharsets;
 import java.security.PrivilegedAction;
@@ -67,7 +68,7 @@ public final class Groovy {
         config.addCompilationCustomizers(secure);
 
         ImportCustomizer customizers = new ImportCustomizer();
-        customizers.addImports(StringUtils.class.getName(), JsonPath.class.getName());
+        customizers.addImports(StringUtils.class.getName(), DateTime.class.getName(), JsonPath.class.getName());
         config.addCompilationCustomizers(customizers);
 
         config.addCompilationCustomizers(new ASTTransformationCustomizer(ThreadInterrupt.class));
