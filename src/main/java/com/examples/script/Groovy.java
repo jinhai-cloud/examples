@@ -29,15 +29,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public final class Groovy {
     private static final Cache<String, Class<?>> CACHE = Caffeine.newBuilder().softValues().build();
     private static final GroovyClassLoader LOADER = getClassLoader();
+    private static final AtomicInteger counter = new AtomicInteger(0);
 
     private Groovy() {
     }
 
-    public static <V> Object eval(String script, Map<String, V> map) {
+    public static <V> Object eval(String name, String script, Map<String, V> map) {
         Objects.requireNonNull(script);
 
         Binding binding = new Binding();
@@ -45,17 +47,21 @@ public final class Groovy {
             map.forEach(binding::setVariable);
         }
 
-        return InvokerHelper.createScript(getClass(script), binding).run();
+        return InvokerHelper.createScript(getClass(name, script), binding).run();
     }
 
-    private static Class<?> getClass(String script) {
+    private static Class<?> getClass(String name, String script) {
         String cacheKey = Hashing.md5().hashString(script, StandardCharsets.UTF_8).toString();
 
         return CACHE.get(cacheKey, key -> {
-            Class<?> clazz = LOADER.parseClass(script, "Script_" + cacheKey + ".groovy");
+            Class<?> clazz = LOADER.parseClass(script, generateScriptName(name));
             LOADER.clearCache();
             return clazz;
         });
+    }
+
+    private static String generateScriptName(String name) {
+        return "Script_" + name + "_" + counter.incrementAndGet() + ".groovy";
     }
 
     private static GroovyClassLoader getClassLoader() {
