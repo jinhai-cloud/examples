@@ -8,6 +8,7 @@ import okhttp3.*;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class Http {
@@ -16,6 +17,7 @@ public class Http {
 
     static {
         client = new OkHttpClient.Builder()
+                .connectionPool(new ConnectionPool(256, 5, TimeUnit.MINUTES))
                 .connectTimeout(Duration.ofMillis(1000))
                 .readTimeout(Duration.ofMillis(1000))
                 .writeTimeout(Duration.ofMillis(1000))
