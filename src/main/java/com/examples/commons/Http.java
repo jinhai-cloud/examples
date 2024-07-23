@@ -17,7 +17,7 @@ public class Http {
 
     static {
         client = new OkHttpClient.Builder()
-                .connectionPool(new ConnectionPool(256, 5, TimeUnit.MINUTES))
+                .connectionPool(new ConnectionPool(256, 300, TimeUnit.SECONDS))
                 .connectTimeout(Duration.ofMillis(1000))
                 .readTimeout(Duration.ofMillis(1000))
                 .writeTimeout(Duration.ofMillis(1000))
