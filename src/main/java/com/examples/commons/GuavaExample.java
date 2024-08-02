@@ -1,20 +1,15 @@
 package com.examples.commons;
 
-import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
+import com.google.common.base.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 import java.util.StringJoiner;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class GuavaExample {
-
-    @Test
-    void supplier() {
-
-    }
 
     @Test
     void string() {
@@ -33,5 +28,31 @@ public class GuavaExample {
         Splitter.on(",").splitToList("hello,world");
         Splitter.on(",").omitEmptyStrings().trimResults().splitToList("a, b,,c ,d");
         Splitter.on("&").withKeyValueSeparator("=").split("k1=v1&k2=v2");
+
+        // 统一用 %s 代替
+        Strings.lenientFormat("%s, i am %s years old", "Hi", 10);
+    }
+
+    /**
+     * 单例，或对象懒加载
+     */
+    @Test
+    void supplier() {
+        Suppliers.ofInstance("Hello");
+        Suppliers.memoize(() -> "Hello");
+        Suppliers.memoizeWithExpiration(() -> "Hello", 300, TimeUnit.SECONDS);
+    }
+
+    @Test
+    void check() {
+        String input = "hello";
+
+        // 方法前置入参检查
+        Preconditions.checkArgument(input.length() > 3, "input %s 长度小于%s", 3);
+        Preconditions.checkNotNull(input, "input %s is null", input);
+
+        // 方法内对象或变量检查，Assert
+        Verify.verify(input.length() > 3, "input %s 长度小于%s", 3);
+        Verify.verifyNotNull(input, "input %s is null", input);
     }
 }
