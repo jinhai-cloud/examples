@@ -8,15 +8,12 @@ import com.google.common.hash.Hashing;
 import com.jayway.jsonpath.JsonPath;
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
-import groovy.transform.ThreadInterrupt;
-import groovy.transform.TimedInterrupt;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.groovy.ast.stmt.DoWhileStatement;
 import org.codehaus.groovy.ast.stmt.ForStatement;
 import org.codehaus.groovy.ast.stmt.WhileStatement;
 import org.codehaus.groovy.control.CompilerConfiguration;
-import org.codehaus.groovy.control.customizers.ASTTransformationCustomizer;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
 import org.codehaus.groovy.runtime.InvokerHelper;
@@ -28,7 +25,6 @@ import java.security.PrivilegedAction;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class Groovy {
@@ -79,10 +75,6 @@ public final class Groovy {
         customizers.addImports(StringUtils.class.getName(), DateTime.class.getName(),
                 Http.class.getName(), JSON.class.getName(), JsonPath.class.getName());
         config.addCompilationCustomizers(customizers);
-
-        config.addCompilationCustomizers(new ASTTransformationCustomizer(ThreadInterrupt.class));
-        config.addCompilationCustomizers(new ASTTransformationCustomizer(
-                Map.of("unit", TimeUnit.MILLISECONDS, "value", 1000), TimedInterrupt.class));
 
         //noinspection removal
         return java.security.AccessController.doPrivileged((PrivilegedAction<GroovyClassLoader>) () ->
