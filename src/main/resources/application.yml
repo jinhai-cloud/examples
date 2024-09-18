@@ -3,8 +3,8 @@ server:
 spring:
   ai:
     openai:
-      api-key: sk-KgvugzpKzki15GFxB72e7782De844b23B3E4Fc6dDf40B29a
-      base-url: https://api.mnzdna.xyz
+      api-key: sk-3DRp9oFqDQEdkxPLuHRzJoNEx9IPSqWbZWRGMvHdG4cVmY91
+      base-url: https://api.chatanywhere.tech
       chat:
         options:
-          model: gpt-3.5-turbo
+          model: gpt-4o-mini
