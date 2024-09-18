@@ -1,2 +1,10 @@
 server:
   port: 8080
+spring:
+  ai:
+    openai:
+      api-key: sk-KgvugzpKzki15GFxB72e7782De844b23B3E4Fc6dDf40B29a
+      base-url: https://api.mnzdna.xyz
+      chat:
+        options:
+          model: gpt-3.5-turbo
