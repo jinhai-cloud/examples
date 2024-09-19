@@ -2,9 +2,6 @@ package com.examples.commons;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -28,9 +25,6 @@ public final class JSON {
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern(PATTERN);
 
     private static final JsonMapper MAPPER = JsonMapper.builder()
-            .enable(MapperFeature.REQUIRE_SETTERS_FOR_GETTERS)
-            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-            .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
             .addModule(new Jdk8Module())
             .addModule(new JavaTimeModule()
                     .addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DATE_FORMAT))
