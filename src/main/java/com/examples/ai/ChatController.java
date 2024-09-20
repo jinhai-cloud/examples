@@ -1,5 +1,6 @@
 package com.examples.ai;
 
+import com.examples.commons.JSON;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
@@ -31,8 +32,9 @@ public class ChatController {
                 .stream()
                 .chatResponse()
                 .map(chatResponse -> ServerSentEvent.<String>builder()
+                        .id(sessionId)
                         .event("message")
-                        .data(chatResponse.getResult().getOutput().getContent())
+                        .data(JSON.toJSONString(chatResponse.getResult()))
                         .build());
     }
 }
