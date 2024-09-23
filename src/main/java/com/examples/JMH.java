@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 public class JMH {
     @Benchmark
     public void measure() {
-
     }
 
     public static void main(String[] args) throws RunnerException {
