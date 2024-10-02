@@ -2,10 +2,16 @@ package com.examples.commons;
 
 import org.apache.commons.text.StringSubstitutor;
 import org.slf4j.helpers.MessageFormatter;
+import org.springframework.util.PropertyPlaceholderHelper;
 
 import java.util.Map;
+import java.util.Properties;
 
 public final class Placeholder {
+
+    private static final PropertyPlaceholderHelper helper =
+            new PropertyPlaceholderHelper("${", "}");
+
     private Placeholder() {
     }
 
@@ -17,5 +23,12 @@ public final class Placeholder {
         StringSubstitutor sub = new StringSubstitutor(map);
         sub.setEnableUndefinedVariableException(true);
         return sub.replace(template);
+    }
+
+    public static String resolve(String template, Map<String, String> map) {
+        Properties properties = new Properties();
+        properties.putAll(map);
+
+        return helper.replacePlaceholders(template, properties);
     }
 }
