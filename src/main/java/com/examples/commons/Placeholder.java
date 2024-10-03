@@ -5,7 +5,6 @@ import org.slf4j.helpers.MessageFormatter;
 import org.springframework.util.PropertyPlaceholderHelper;
 
 import java.util.Map;
-import java.util.Properties;
 
 public final class Placeholder {
 
@@ -26,9 +25,6 @@ public final class Placeholder {
     }
 
     public static String resolve(String template, Map<String, String> map) {
-        Properties properties = new Properties();
-        properties.putAll(map);
-
-        return helper.replacePlaceholders(template, properties);
+        return helper.replacePlaceholders(template, map::get);
     }
 }
