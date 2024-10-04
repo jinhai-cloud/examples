@@ -28,7 +28,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class Groovy {
-    private static final Cache<String, Class<?>> CACHE = Caffeine.newBuilder().softValues().build();
+    private static final Cache<String, Class<?>> CACHE = Caffeine.newBuilder().build();
     private static final GroovyClassLoader LOADER = getClassLoader();
     private static final AtomicInteger counter = new AtomicInteger(0);
 
@@ -47,7 +47,7 @@ public final class Groovy {
     }
 
     private static Class<?> getClass(String name, String script) {
-        String cacheKey = Hashing.md5().hashString(script, StandardCharsets.UTF_8).toString();
+        String cacheKey = Hashing.murmur3_128().hashString(script, StandardCharsets.UTF_8).toString();
 
         return CACHE.get(cacheKey, key -> {
             Class<?> clazz = LOADER.parseClass(script, generateScriptName(name));
