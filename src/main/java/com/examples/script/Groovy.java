@@ -4,7 +4,6 @@ import com.examples.commons.Http;
 import com.examples.commons.JSON;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
-import com.google.common.hash.Hashing;
 import com.jayway.jsonpath.JsonPath;
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
@@ -20,7 +19,6 @@ import org.codehaus.groovy.runtime.InvokerHelper;
 import org.codehaus.groovy.syntax.Types;
 import org.joda.time.DateTime;
 
-import java.nio.charset.StandardCharsets;
 import java.security.PrivilegedAction;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +26,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public final class Groovy {
-    private static final Cache<String, Class<?>> CACHE = Caffeine.newBuilder().build();
+    private static final Cache<ScriptKey, Class<?>> CACHE = Caffeine.newBuilder().build();
     private static final GroovyClassLoader LOADER = getClassLoader();
     private static final AtomicInteger counter = new AtomicInteger(0);
 
@@ -47,9 +45,9 @@ public final class Groovy {
     }
 
     private static Class<?> getClass(String name, String script) {
-        String cacheKey = Hashing.murmur3_128().hashString(script, StandardCharsets.UTF_8).toString();
+        ScriptKey scriptKey = new ScriptKey(script);
 
-        return CACHE.get(cacheKey, key -> {
+        return CACHE.get(scriptKey, key -> {
             Class<?> clazz = LOADER.parseClass(script, generateScriptName(name));
             LOADER.clearCache();
             return clazz;
