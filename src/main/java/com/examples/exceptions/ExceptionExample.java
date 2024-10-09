@@ -1,14 +1,15 @@
 package com.examples.exceptions;
 
-import com.google.common.base.Throwables;
-import com.google.common.util.concurrent.UncheckedTimeoutException;
-import org.apache.commons.lang3.exception.UncheckedInterruptedException;
-import org.junit.jupiter.api.Test;
-
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.sql.SQLException;
 import java.util.concurrent.TimeoutException;
+
+import org.apache.commons.lang3.exception.UncheckedInterruptedException;
+import org.junit.jupiter.api.Test;
+
+import com.google.common.base.Throwables;
+import com.google.common.util.concurrent.UncheckedTimeoutException;
 
 public class ExceptionExample {
 

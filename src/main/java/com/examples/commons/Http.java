@@ -1,14 +1,15 @@
 package com.examples.commons;
 
-import com.examples.exceptions.HttpException;
-import com.google.common.base.Throwables;
-import lombok.extern.slf4j.Slf4j;
-import okhttp3.*;
-
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import com.examples.exceptions.HttpException;
+import com.google.common.base.Throwables;
+
+import lombok.extern.slf4j.Slf4j;
+import okhttp3.*;
 
 @Slf4j
 public class Http {
@@ -33,7 +34,8 @@ public class Http {
         Headers.Builder builder = new Headers.Builder();
         headers.forEach(builder::add);
 
-        Request request = new Request.Builder().url(url).headers(builder.build()).build();
+        Request request =
+                new Request.Builder().url(url).headers(builder.build()).build();
         return doRequest(request);
     }
 
@@ -71,7 +73,8 @@ public class Http {
                 ResponseBody body = response.body();
                 return body != null ? body.string() : null;
             } else {
-                throw new HttpException(Placeholder.format("Response code is incorrect: {}, {}, {}", request.url(), response.code(), response.message()));
+                throw new HttpException(Placeholder.format(
+                        "Response code is incorrect: {}, {}, {}", request.url(), response.code(), response.message()));
             }
         } catch (IOException e) {
             Throwables.throwIfUnchecked(e);

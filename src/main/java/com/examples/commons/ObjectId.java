@@ -41,8 +41,9 @@ public final class ObjectId implements Comparable<ObjectId>, Serializable {
     private static final AtomicInteger NEXT_COUNTER = new AtomicInteger(new SecureRandom().nextInt());
 
     private static final char[] HEX_CHARS = {
-            '0', '1', '2', '3', '4', '5', '6', '7',
-            '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+        '0', '1', '2', '3', '4', '5', '6', '7',
+        '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+    };
 
     /**
      * The timestamp
@@ -162,13 +163,19 @@ public final class ObjectId implements Comparable<ObjectId>, Serializable {
         this(timestamp, RANDOM_VALUE1, RANDOM_VALUE2, counter, checkCounter);
     }
 
-    private ObjectId(final int timestamp, final int randomValue1, final short randomValue2, final int counter,
-                     final boolean checkCounter) {
+    private ObjectId(
+            final int timestamp,
+            final int randomValue1,
+            final short randomValue2,
+            final int counter,
+            final boolean checkCounter) {
         if ((randomValue1 & 0xff000000) != 0) {
-            throw new IllegalArgumentException("The random value must be between 0 and 16777215 (it must fit in three bytes).");
+            throw new IllegalArgumentException(
+                    "The random value must be between 0 and 16777215 (it must fit in three bytes).");
         }
         if (checkCounter && ((counter & 0xff000000) != 0)) {
-            throw new IllegalArgumentException("The counter must be between 0 and 16777215 (it must fit in three bytes).");
+            throw new IllegalArgumentException(
+                    "The counter must be between 0 and 16777215 (it must fit in three bytes).");
         }
         this.timestamp = timestamp;
         this.counter = counter & LOW_ORDER_THREE_BYTES;
@@ -223,7 +230,7 @@ public final class ObjectId implements Comparable<ObjectId>, Serializable {
     public byte[] toByteArray() {
         ByteBuffer buffer = ByteBuffer.allocate(OBJECT_ID_LENGTH);
         putToByteBuffer(buffer);
-        return buffer.array();  // using .allocate ensures there is a backing array that can be returned
+        return buffer.array(); // using .allocate ensures there is a backing array that can be returned
     }
 
     /**
@@ -428,10 +435,7 @@ public final class ObjectId implements Comparable<ObjectId>, Serializable {
 
     private static int makeInt(final byte b3, final byte b2, final byte b1, final byte b0) {
         // CHECKSTYLE:OFF
-        return (((b3) << 24) |
-                ((b2 & 0xff) << 16) |
-                ((b1 & 0xff) << 8) |
-                ((b0 & 0xff)));
+        return (((b3) << 24) | ((b2 & 0xff) << 16) | ((b1 & 0xff) << 8) | ((b0 & 0xff)));
         // CHECKSTYLE:ON
     }
 

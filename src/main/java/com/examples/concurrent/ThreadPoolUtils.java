@@ -1,15 +1,15 @@
 package com.examples.concurrent;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
-
 import java.util.concurrent.*;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 public class ThreadPoolUtils {
 
-    public static ThreadPoolExecutor create(int coreSize, int maxSize, int queueSize, String namePrefix, boolean daemon) {
-        BlockingQueue<Runnable> blockingQueue = queueSize <= 0 ?
-                new SynchronousQueue<>() :
-                new LinkedBlockingQueue<>(queueSize);
+    public static ThreadPoolExecutor create(
+            int coreSize, int maxSize, int queueSize, String namePrefix, boolean daemon) {
+        BlockingQueue<Runnable> blockingQueue =
+                queueSize <= 0 ? new SynchronousQueue<>() : new LinkedBlockingQueue<>(queueSize);
 
         ThreadFactory threadFactory = new ThreadFactoryBuilder()
                 .setNameFormat(namePrefix + "-%d")
@@ -26,7 +26,8 @@ public class ThreadPoolUtils {
                 new AbortPolicyWithReport(namePrefix));
     }
 
-    public static ThreadPoolExecutor createEagerPool(int coreSize, int maxSize, int queueSize, String namePrefix, boolean daemon) {
+    public static ThreadPoolExecutor createEagerPool(
+            int coreSize, int maxSize, int queueSize, String namePrefix, boolean daemon) {
         ThreadFactory threadFactory = new ThreadFactoryBuilder()
                 .setNameFormat(namePrefix + "-%d")
                 .setDaemon(daemon)

@@ -1,6 +1,7 @@
 package com.examples.ai;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
@@ -18,7 +19,7 @@ import org.springframework.ai.vectorstore.SimpleVectorStore;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.core.io.FileSystemResource;
 
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class RAGExample {
@@ -37,8 +38,8 @@ public class RAGExample {
                 .withModel(OpenAiApi.ChatModel.GPT_4_O_MINI)
                 .withTemperature(0.7F)
                 .build();
-        ChatClient chatClient = ChatClient.builder(new OpenAiChatModel(openAiApi, options))
-                .build();
+        ChatClient chatClient =
+                ChatClient.builder(new OpenAiChatModel(openAiApi, options)).build();
 
         // 配置VectorStore
         VectorStore vectorStore = new SimpleVectorStore(new OpenAiEmbeddingModel(openAiApi));
@@ -54,7 +55,8 @@ public class RAGExample {
         VectorStoreChatMemoryAdvisor vectorStoreChatMemoryAdvisor = new VectorStoreChatMemoryAdvisor(vectorStore);
         MessageChatMemoryAdvisor chatMemoryAdvisor = new MessageChatMemoryAdvisor(new InMemoryChatMemory());
 
-        String result = chatClient.prompt()
+        String result = chatClient
+                .prompt()
                 .user(userInput)
                 .advisors(questionAnswerAdvisor, chatMemoryAdvisor)
                 .call()

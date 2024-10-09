@@ -1,9 +1,9 @@
 package com.examples.concurrent;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AbortPolicyWithReport extends ThreadPoolExecutor.AbortPolicy {

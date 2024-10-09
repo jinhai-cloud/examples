@@ -1,12 +1,11 @@
 package com.examples.script;
 
-import com.examples.commons.Http;
-import com.examples.commons.JSON;
-import com.github.benmanes.caffeine.cache.Cache;
-import com.github.benmanes.caffeine.cache.Caffeine;
-import com.jayway.jsonpath.JsonPath;
-import groovy.lang.Binding;
-import groovy.lang.GroovyClassLoader;
+import java.security.PrivilegedAction;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.groovy.ast.stmt.DoWhileStatement;
@@ -19,19 +18,22 @@ import org.codehaus.groovy.runtime.InvokerHelper;
 import org.codehaus.groovy.syntax.Types;
 import org.joda.time.DateTime;
 
-import java.security.PrivilegedAction;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.examples.commons.Http;
+import com.examples.commons.JSON;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import com.jayway.jsonpath.JsonPath;
+
+import groovy.lang.Binding;
+import groovy.lang.GroovyClassLoader;
 
 public final class Groovy {
-    private static final Cache<ScriptKey, Class<?>> CACHE = Caffeine.newBuilder().build();
+    private static final Cache<ScriptKey, Class<?>> CACHE =
+            Caffeine.newBuilder().build();
     private static final GroovyClassLoader LOADER = getClassLoader();
     private static final AtomicInteger counter = new AtomicInteger(0);
 
-    private Groovy() {
-    }
+    private Groovy() {}
 
     public static <V> Object eval(String name, String script, Map<String, V> map) {
         Objects.requireNonNull(script);
@@ -70,12 +72,16 @@ public final class Groovy {
         config.addCompilationCustomizers(secure);
 
         ImportCustomizer customizers = new ImportCustomizer();
-        customizers.addImports(StringUtils.class.getName(), DateTime.class.getName(),
-                Http.class.getName(), JSON.class.getName(), JsonPath.class.getName());
+        customizers.addImports(
+                StringUtils.class.getName(),
+                DateTime.class.getName(),
+                Http.class.getName(),
+                JSON.class.getName(),
+                JsonPath.class.getName());
         config.addCompilationCustomizers(customizers);
 
         //noinspection removal
-        return java.security.AccessController.doPrivileged((PrivilegedAction<GroovyClassLoader>) () ->
-                new GroovyClassLoader(Groovy.class.getClassLoader(), config));
+        return java.security.AccessController.doPrivileged((PrivilegedAction<GroovyClassLoader>)
+                () -> new GroovyClassLoader(Groovy.class.getClassLoader(), config));
     }
 }

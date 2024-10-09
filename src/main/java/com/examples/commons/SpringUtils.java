@@ -1,5 +1,8 @@
 package com.examples.commons;
 
+import java.util.Map;
+import java.util.Objects;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -7,9 +10,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
-import java.util.Objects;
 
 @Component
 public class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {

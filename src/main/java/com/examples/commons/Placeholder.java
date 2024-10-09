@@ -1,24 +1,23 @@
 package com.examples.commons;
 
-import com.github.mustachejava.DefaultMustacheFactory;
-import com.github.mustachejava.Mustache;
-import com.github.mustachejava.MustacheFactory;
-import org.apache.commons.text.StringSubstitutor;
-import org.slf4j.helpers.MessageFormatter;
-import org.springframework.util.PropertyPlaceholderHelper;
-
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Map;
 
+import org.apache.commons.text.StringSubstitutor;
+import org.slf4j.helpers.MessageFormatter;
+import org.springframework.util.PropertyPlaceholderHelper;
+
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.Mustache;
+import com.github.mustachejava.MustacheFactory;
+
 public final class Placeholder {
 
-    private static final PropertyPlaceholderHelper helper =
-            new PropertyPlaceholderHelper("${", "}");
+    private static final PropertyPlaceholderHelper helper = new PropertyPlaceholderHelper("${", "}");
     private static final MustacheFactory MUSTACHE = new DefaultMustacheFactory();
 
-    private Placeholder() {
-    }
+    private Placeholder() {}
 
     public static String format(String template, Object... args) {
         return MessageFormatter.basicArrayFormat(template, args);

@@ -1,9 +1,10 @@
 package com.examples.concurrent;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.concurrent.CompletableFuture;
+
 import org.junit.jupiter.api.Test;
 
-import java.util.concurrent.CompletableFuture;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <a href="https://mp.weixin.qq.com/s/DDJ42NY4knnl59UalyZPGA">CompletableFuture</a>
@@ -40,18 +41,14 @@ public class CompletableFutureExample {
     @Test
     void then() {
         // CF完成后触发，不关心CF的返回值，无入参 & 无返回值
-        CompletableFuture.supplyAsync(() -> "Hi")
-                .thenRun(() -> log.info("Hi"))
-                .thenRunAsync(() -> log.info("Hi"));
+        CompletableFuture.supplyAsync(() -> "Hi").thenRun(() -> log.info("Hi")).thenRunAsync(() -> log.info("Hi"));
 
         // CF完成后触发，依赖CF的返回值，有入参 & 无返回值
         CompletableFuture.supplyAsync(() -> "Hi").thenAccept(t -> log.info(t));
         CompletableFuture.supplyAsync(() -> "Hi").thenAcceptAsync(t -> log.info(t));
 
         // CF完成后触发，依赖CF的返回值，有入参 & 有返回值
-        CompletableFuture.supplyAsync(() -> "Hi")
-                .thenApply(t -> t + "Hello")
-                .thenApplyAsync(t -> t + "World");
+        CompletableFuture.supplyAsync(() -> "Hi").thenApply(t -> t + "Hello").thenApplyAsync(t -> t + "World");
 
         // thenCompose：连接两个CF任务，依赖上一个CF任务执行完成，但结果由第二个CF任务返回
         // thenApply：依赖上一个CF结果，再执行Function
@@ -90,7 +87,9 @@ public class CompletableFutureExample {
         CompletableFuture<String> cf6 = CompletableFuture.completedFuture("World");
 
         // whenComplete的t和u是null，因为allOf返回值是CompletableFuture<Void>
-        CompletableFuture.allOf(cf4, cf5, cf6).whenComplete((t, u) -> log.info("END")).join();
+        CompletableFuture.allOf(cf4, cf5, cf6)
+                .whenComplete((t, u) -> log.info("END"))
+                .join();
     }
 
     @Test
@@ -116,7 +115,9 @@ public class CompletableFutureExample {
         CompletableFuture<String> cf6 = CompletableFuture.completedFuture("World");
 
         // whenComplete的t可能为null或者结果值，因为anyOf返回值是CompletableFuture<Object>
-        CompletableFuture.anyOf(cf4, cf5, cf6).whenComplete((t, u) -> log.info("END")).join();
+        CompletableFuture.anyOf(cf4, cf5, cf6)
+                .whenComplete((t, u) -> log.info("END"))
+                .join();
     }
 
     @Test
