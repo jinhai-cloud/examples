@@ -1,5 +1,6 @@
 package com.examples.concurrent;
 
+import java.time.Duration;
 import java.util.concurrent.*;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -7,42 +8,43 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 public class ThreadPoolUtils {
 
     public static ThreadPoolExecutor create(
-            int coreSize, int maxSize, int queueSize, String namePrefix, boolean daemon) {
+            int corePoolSize, int maxPoolSize, Duration keepAlive, int queueCapacity, String threadNamePrefix) {
         BlockingQueue<Runnable> blockingQueue =
-                queueSize <= 0 ? new SynchronousQueue<>() : new LinkedBlockingQueue<>(queueSize);
+                queueCapacity <= 0 ? new SynchronousQueue<>() : new LinkedBlockingQueue<>(queueCapacity);
 
         ThreadFactory threadFactory = new ThreadFactoryBuilder()
-                .setNameFormat(namePrefix + "-%d")
-                .setDaemon(daemon)
+                .setNameFormat(threadNamePrefix + "-%d")
                 .build();
 
         return new ThreadPoolExecutor(
-                coreSize,
-                maxSize,
-                60,
+                corePoolSize,
+                maxPoolSize,
+                keepAlive.getSeconds(),
                 TimeUnit.SECONDS,
                 blockingQueue,
                 threadFactory,
-                new AbortPolicyWithReport(namePrefix));
+                new AbortPolicyWithReport(threadNamePrefix));
     }
 
-    public static ThreadPoolExecutor createEagerPool(
-            int coreSize, int maxSize, int queueSize, String namePrefix, boolean daemon) {
+    public static ThreadPoolExecutor create(
+            int maxPoolSize, Duration keepAlive, int queueCapacity, String threadNamePrefix) {
+        BlockingQueue<Runnable> blockingQueue =
+                queueCapacity <= 0 ? new SynchronousQueue<>() : new LinkedBlockingQueue<>(queueCapacity);
+
         ThreadFactory threadFactory = new ThreadFactoryBuilder()
-                .setNameFormat(namePrefix + "-%d")
-                .setDaemon(daemon)
+                .setNameFormat(threadNamePrefix + "-%d")
                 .build();
 
-        TaskQueue<Runnable> taskQueue = new TaskQueue<>(queueSize <= 0 ? 1 : queueSize);
-        EagerThreadPoolExecutor executor = new EagerThreadPoolExecutor(
-                coreSize,
-                maxSize,
-                60,
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
+                maxPoolSize,
+                maxPoolSize,
+                keepAlive.getSeconds(),
                 TimeUnit.SECONDS,
-                taskQueue,
+                blockingQueue,
                 threadFactory,
-                new AbortPolicyWithReport(namePrefix));
-        taskQueue.setExecutor(executor);
-        return executor;
+                new AbortPolicyWithReport(threadNamePrefix));
+        threadPoolExecutor.allowCoreThreadTimeOut(true);
+
+        return threadPoolExecutor;
     }
 }
