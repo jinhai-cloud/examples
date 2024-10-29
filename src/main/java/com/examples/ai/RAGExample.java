@@ -50,6 +50,8 @@ public class RAGExample {
         vectorStore.add(documents);
 
         // QuestionAnswerAdvisor: 根据similaritySearch获取符合的documents，并作为question_answer_context传入大模型
+        // QuestionAnswerAdvisor类里可以自定义SearchRequest，配置topK或filterExpression
+        // VectorStoreChatMemoryAdvisor: 通过向量数据库来永久记忆chat过程中上下文信息
         // MessageChatMemoryAdvisor: 记忆chat过程中上下文信息
         QuestionAnswerAdvisor questionAnswerAdvisor = new QuestionAnswerAdvisor(vectorStore);
         VectorStoreChatMemoryAdvisor vectorStoreChatMemoryAdvisor = new VectorStoreChatMemoryAdvisor(vectorStore);
