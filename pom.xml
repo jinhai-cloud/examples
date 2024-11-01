@@ -10,99 +10,138 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <guava.version>32.1.3-jre</guava.version>
+    <commons-lang3.version>3.13.0</commons-lang3.version>
+    <commons-collections4.version>4.5.0-M2</commons-collections4.version>
+    <commons-io.version>2.16.1</commons-io.version>
+    <commons-text.version>1.11.0</commons-text.version>
+    <jackson.version>2.15.3</jackson.version>
+    <json-path.version>2.9.0</json-path.version>
+    <json-smart.version>2.5.0</json-smart.version>
+    <joda-time.version>2.12.5</joda-time.version>
+    <netty.version>4.1.112.Final</netty.version>
+    <failsafe.version>3.3.2</failsafe.version>
+    <caffeine.version>3.1.8</caffeine.version>
+    <lettuce.version>6.2.7.RELEASE</lettuce.version>
+    <fastutil.version>8.5.13</fastutil.version>
+    <bson.version>5.1.4</bson.version>
+    <java-uuid-generator.version>5.1.0</java-uuid-generator.version>
+    <okhttp.version>4.12.0</okhttp.version>
+    <mustache.version>0.9.14</mustache.version>
+    <hutool.version>5.8.25</hutool.version>
+    <rocksdb.version>8.11.4</rocksdb.version>
+    <disruptor.version>4.0.0</disruptor.version>
+    <byte-buddy.version>1.14.19</byte-buddy.version>
+    <roaringbitmap.version>1.2.1</roaringbitmap.version>
+    <groovy.version>3.0.22</groovy.version>
+    <spring.version>6.1.12</spring.version>
+    <spring-boot.version>3.3.3</spring-boot.version>
+    <spring-ai.version>1.0.0-M3</spring-ai.version>
+    <spring-ai-alibaba.version>1.0.0-M3.1</spring-ai-alibaba.version>
+    <hikaricp.version>6.0.0</hikaricp.version>
+    <jmh.version>1.37</jmh.version>
+    <log4j.version>2.23.1</log4j.version>
+    <junit.version>5.10.0</junit.version>
+    <awaitility.version>4.2.1</awaitility.version>
+    <lombok.version>1.18.30</lombok.version>
+
+    <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+    <spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
+    <palantir-java-format.version>2.50.0</palantir-java-format.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>32.1.3-jre</version>
+      <version>${guava.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.13.0</version>
+      <version>${commons-lang3.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-collections4</artifactId>
-      <version>4.5.0-M2</version>
+      <version>${commons-collections4.version}</version>
     </dependency>
 
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.16.1</version>
+      <version>${commons-io.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-text</artifactId>
-      <version>1.11.0</version>
+      <version>${commons-text.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.15.3</version>
+      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jsr310</artifactId>
-      <version>2.15.3</version>
+      <version>${jackson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.datatype</groupId>
       <artifactId>jackson-datatype-jdk8</artifactId>
-      <version>2.15.3</version>
+      <version>${jackson.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.jayway.jsonpath</groupId>
       <artifactId>json-path</artifactId>
-      <version>2.9.0</version>
+      <version>${json-path.version}</version>
     </dependency>
     <dependency>
       <groupId>net.minidev</groupId>
       <artifactId>json-smart</artifactId>
-      <version>2.5.0</version>
+      <version>${json-smart.version}</version>
     </dependency>
 
     <dependency>
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
-      <version>2.12.5</version>
+      <version>${joda-time.version}</version>
     </dependency>
 
     <dependency>
       <groupId>io.netty</groupId>
       <artifactId>netty-all</artifactId>
-      <version>4.1.112.Final</version>
+      <version>${netty.version}</version>
     </dependency>
 
     <dependency>
       <groupId>dev.failsafe</groupId>
       <artifactId>failsafe</artifactId>
-      <version>3.3.2</version>
+      <version>${failsafe.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.github.ben-manes.caffeine</groupId>
       <artifactId>caffeine</artifactId>
-      <version>3.1.8</version>
+      <version>${caffeine.version}</version>
     </dependency>
     <dependency>
       <groupId>io.lettuce</groupId>
       <artifactId>lettuce-core</artifactId>
-      <version>6.2.7.RELEASE</version>
+      <version>${lettuce.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-      <version>3.3.3</version>
+      <version>${spring-boot.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>
@@ -113,13 +152,13 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-log4j2</artifactId>
-      <version>3.3.3</version>
+      <version>${spring-boot.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-openai-spring-boot-starter</artifactId>
-      <version>1.0.0-M2</version>
+      <version>${spring-ai.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework.boot</groupId>
@@ -130,30 +169,30 @@
     <dependency>
       <groupId>com.alibaba.cloud.ai</groupId>
       <artifactId>spring-ai-alibaba-starter</artifactId>
-      <version>1.0.0-M2</version>
+      <version>${spring-ai-alibaba.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.ai</groupId>
       <artifactId>spring-ai-tika-document-reader</artifactId>
-      <version>1.0.0-M2</version>
+      <version>${spring-ai.version}</version>
     </dependency>
 
     <dependency>
       <groupId>it.unimi.dsi</groupId>
       <artifactId>fastutil</artifactId>
-      <version>8.5.13</version>
+      <version>${fastutil.version}</version>
     </dependency>
 
     <!-- ObjectId -->
     <dependency>
       <groupId>org.mongodb</groupId>
       <artifactId>bson</artifactId>
-      <version>5.1.4</version>
+      <version>${bson.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.uuid</groupId>
       <artifactId>java-uuid-generator</artifactId>
-      <version>5.1.0</version>
+      <version>${java-uuid-generator.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.slf4j</groupId>
@@ -165,100 +204,100 @@
     <dependency>
       <groupId>com.squareup.okhttp3</groupId>
       <artifactId>okhttp</artifactId>
-      <version>4.12.0</version>
+      <version>${okhttp.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.github.spullara.mustache.java</groupId>
       <artifactId>compiler</artifactId>
-      <version>0.9.14</version>
+      <version>${mustache.version}</version>
     </dependency>
 
     <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-all</artifactId>
-      <version>5.8.25</version>
+      <version>${hutool.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.rocksdb</groupId>
       <artifactId>rocksdbjni</artifactId>
-      <version>8.11.4</version>
+      <version>${rocksdb.version}</version>
     </dependency>
 
     <dependency>
       <groupId>com.lmax</groupId>
       <artifactId>disruptor</artifactId>
-      <version>4.0.0</version>
+      <version>${disruptor.version}</version>
     </dependency>
 
     <dependency>
       <groupId>net.bytebuddy</groupId>
       <artifactId>byte-buddy</artifactId>
-      <version>1.14.19</version>
+      <version>${byte-buddy.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.roaringbitmap</groupId>
       <artifactId>RoaringBitmap</artifactId>
-      <version>1.2.1</version>
+      <version>${roaringbitmap.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
       <artifactId>groovy</artifactId>
-      <version>3.0.22</version>
+      <version>${groovy.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-jdbc</artifactId>
-      <version>6.1.12</version>
+      <version>${spring.version}</version>
     </dependency>
     <dependency>
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP</artifactId>
-      <version>6.0.0</version>
+      <version>${hikaricp.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
-      <version>2.23.1</version>
+      <version>${log4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-slf4j2-impl</artifactId>
-      <version>2.23.1</version>
+      <version>${log4j.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-core</artifactId>
-      <version>1.37</version>
+      <version>${jmh.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-generator-annprocess</artifactId>
-      <version>1.37</version>
+      <version>${jmh.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>5.10.0</version>
+      <version>${junit.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility</artifactId>
-      <version>4.2.1</version>
+      <version>${awaitility.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.30</version>
+      <version>${lombok.version}</version>
     </dependency>
   </dependencies>
 
@@ -290,7 +329,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
+        <version>${maven-compiler-plugin.version}</version>
         <configuration>
           <parameters>true</parameters>
         </configuration>
@@ -299,11 +338,11 @@
       <plugin>
         <groupId>com.diffplug.spotless</groupId>
         <artifactId>spotless-maven-plugin</artifactId>
-        <version>2.43.0</version>
+        <version>${spotless-maven-plugin.version}</version>
         <configuration>
           <java>
             <palantirJavaFormat>
-              <version>2.50.0</version>
+              <version>${palantir-java-format.version}</version>
             </palantirJavaFormat>
             <importOrder>
               <order>java|javax,org,com,\#</order>
