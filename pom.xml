@@ -22,6 +22,7 @@
     <joda-time.version>2.12.5</joda-time.version>
     <netty.version>4.1.112.Final</netty.version>
     <failsafe.version>3.3.2</failsafe.version>
+    <resilience4j.version>2.2.0</resilience4j.version>
     <caffeine.version>3.1.8</caffeine.version>
     <lettuce.version>6.2.7.RELEASE</lettuce.version>
     <fastutil.version>8.5.13</fastutil.version>
@@ -32,6 +33,7 @@
     <hutool.version>5.8.25</hutool.version>
     <rocksdb.version>8.11.4</rocksdb.version>
     <disruptor.version>4.0.0</disruptor.version>
+    <snakeyaml.version>2.3</snakeyaml.version>
     <byte-buddy.version>1.14.19</byte-buddy.version>
     <roaringbitmap.version>1.2.1</roaringbitmap.version>
     <groovy.version>3.0.22</groovy.version>
@@ -125,6 +127,11 @@
       <groupId>dev.failsafe</groupId>
       <artifactId>failsafe</artifactId>
       <version>${failsafe.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.resilience4j</groupId>
+      <artifactId>resilience4j-all</artifactId>
+      <version>${resilience4j.version}</version>
     </dependency>
 
     <dependency>
@@ -229,6 +236,12 @@
       <groupId>com.lmax</groupId>
       <artifactId>disruptor</artifactId>
       <version>${disruptor.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.yaml</groupId>
+      <artifactId>snakeyaml</artifactId>
+      <version>${snakeyaml.version}</version>
     </dependency>
 
     <dependency>
