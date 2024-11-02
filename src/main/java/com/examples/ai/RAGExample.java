@@ -36,7 +36,7 @@ public class RAGExample {
         OpenAiApi openAiApi = new OpenAiApi(baseUrl, apiKey);
         OpenAiChatOptions options = OpenAiChatOptions.builder()
                 .withModel(OpenAiApi.ChatModel.GPT_4_O_MINI)
-                .withTemperature(0.7F)
+                .withTemperature(0.7)
                 .build();
         ChatClient chatClient =
                 ChatClient.builder(new OpenAiChatModel(openAiApi, options)).build();

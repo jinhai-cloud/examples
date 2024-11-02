@@ -21,6 +21,7 @@
     <json-smart.version>2.5.0</json-smart.version>
     <joda-time.version>2.12.5</joda-time.version>
     <netty.version>4.1.112.Final</netty.version>
+    <sentinel.version>1.8.8</sentinel.version>
     <failsafe.version>3.3.2</failsafe.version>
     <resilience4j.version>2.2.0</resilience4j.version>
     <caffeine.version>3.1.8</caffeine.version>
@@ -123,6 +124,11 @@
       <version>${netty.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.alibaba.csp</groupId>
+      <artifactId>sentinel-core</artifactId>
+      <version>${sentinel.version}</version>
+    </dependency>
     <dependency>
       <groupId>dev.failsafe</groupId>
       <artifactId>failsafe</artifactId>
