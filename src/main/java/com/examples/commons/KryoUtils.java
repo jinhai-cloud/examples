@@ -10,7 +10,7 @@ import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryo.util.Pool;
 
 public class KryoUtils {
-    private static final int POOL_CAPACITY = 8;
+    private static final int POOL_CAPACITY = 16;
     private static final Pool<Kryo> kryoPool = new Pool<>(true, false, POOL_CAPACITY) {
         protected Kryo create() {
             Kryo kryo = new Kryo();
@@ -21,36 +21,48 @@ public class KryoUtils {
 
     public static <T extends Serializable> byte[] serialize(T object) {
         Kryo kryo = kryoPool.obtain();
-        Output output = new Output(4096);
-        kryo.writeObject(output, object);
-        output.close();
-        kryoPool.free(kryo);
-        return output.toBytes();
+        try {
+            Output output = new Output(4096);
+            kryo.writeObject(output, object);
+            output.close();
+            return output.toBytes();
+        } finally {
+            kryoPool.free(kryo);
+        }
     }
 
     public static <T extends Serializable> void serialize(T object, OutputStream outputStream) {
         Kryo kryo = kryoPool.obtain();
-        Output output = new Output(outputStream);
-        kryo.writeObject(output, object);
-        output.close();
-        kryoPool.free(kryo);
+        try {
+            Output output = new Output(outputStream);
+            kryo.writeObject(output, object);
+            output.close();
+        } finally {
+            kryoPool.free(kryo);
+        }
     }
 
     public static <T extends Serializable> T deserialize(byte[] bytes, Class<T> clazz) {
         Kryo kryo = kryoPool.obtain();
-        Input input = new Input(bytes);
-        T object = kryo.readObject(input, clazz);
-        input.close();
-        kryoPool.free(kryo);
-        return object;
+        try {
+            Input input = new Input(bytes);
+            T object = kryo.readObject(input, clazz);
+            input.close();
+            return object;
+        } finally {
+            kryoPool.free(kryo);
+        }
     }
 
     public static <T extends Serializable> T deserialize(InputStream inputStream, Class<T> clazz) {
         Kryo kryo = kryoPool.obtain();
-        Input input = new Input(inputStream);
-        T object = kryo.readObject(input, clazz);
-        input.close();
-        kryoPool.free(kryo);
-        return object;
+        try {
+            Input input = new Input(inputStream);
+            T object = kryo.readObject(input, clazz);
+            input.close();
+            return object;
+        } finally {
+            kryoPool.free(kryo);
+        }
     }
 }
