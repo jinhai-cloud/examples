@@ -1,10 +1,11 @@
 package com.examples.commons;
 
-import com.google.common.base.Preconditions;
+import java.io.IOException;
+import java.util.NoSuchElementException;
+
 import org.rocksdb.*;
 
-import java.io.Serializable;
-import java.util.NoSuchElementException;
+import com.google.common.base.Preconditions;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -15,7 +16,7 @@ public class RocksDB {
         org.rocksdb.RocksDB.loadLibrary();
     }
 
-    public RocksDB(String path) {
+    public RocksDB(String path) throws IOException {
         BloomFilter fullFilter = new BloomFilter(10.0D, false);
         BlockBasedTableConfig tableFormatConfig = new BlockBasedTableConfig()
                 .setFilterPolicy(fullFilter)
@@ -32,7 +33,7 @@ public class RocksDB {
         try {
             rocksDB = org.rocksdb.RocksDB.open(options, path);
         } catch (RocksDBException e) {
-            throw new RuntimeException(e);
+            throw new IOException("Unable to open RocksDB", e);
         }
     }
 

@@ -2,7 +2,6 @@ package com.examples.commons;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
