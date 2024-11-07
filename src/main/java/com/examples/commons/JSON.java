@@ -20,6 +20,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.google.common.base.Preconditions;
 
 public final class JSON {
     private static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
@@ -81,12 +82,9 @@ public final class JSON {
     }
 
     public static <T> T parseObject(String value, Class<T> clazz) {
+        Preconditions.checkArgument(Objects.nonNull(clazz), "Unrecognized Class: [null]");
         if (StringUtils.isEmpty(value)) {
             return null;
-        }
-
-        if (Objects.isNull(clazz)) {
-            throw new IllegalArgumentException("Unrecognized Class: [null]");
         }
 
         try {
@@ -97,12 +95,9 @@ public final class JSON {
     }
 
     public static <T> T parseObject(String value, TypeReference<T> typeRef) {
+        Preconditions.checkArgument(Objects.nonNull(typeRef), "Unrecognized TypeReference: [null]");
         if (StringUtils.isEmpty(value)) {
             return null;
-        }
-
-        if (Objects.isNull(typeRef)) {
-            throw new IllegalArgumentException("Unrecognized TypeReference: [null]");
         }
 
         try {
@@ -125,12 +120,9 @@ public final class JSON {
     }
 
     public static <T> List<T> parseArray(String value, Class<T> clazz) {
+        Preconditions.checkArgument(Objects.nonNull(clazz), "Unrecognized Class: [null]");
         if (StringUtils.isEmpty(value)) {
             return null;
-        }
-
-        if (Objects.isNull(clazz)) {
-            throw new IllegalArgumentException("Unrecognized Class: [null]");
         }
 
         try {

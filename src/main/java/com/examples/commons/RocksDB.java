@@ -45,7 +45,7 @@ public class RocksDB {
     }
 
     public <T> void put(byte[] key, T value) {
-        Preconditions.checkArgument(value != null, "Null values are not allowed.");
+        Preconditions.checkArgument(Objects.nonNull(value), "Null values are not allowed.");
         try {
             rocksDB.put(key, KryoUtils.serialize(value));
         } catch (RocksDBException e) {
