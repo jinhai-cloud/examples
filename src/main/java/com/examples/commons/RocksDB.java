@@ -1,6 +1,12 @@
 package com.examples.commons;
 
+import com.google.common.base.Preconditions;
 import org.rocksdb.*;
+
+import java.io.Serializable;
+import java.util.NoSuchElementException;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class RocksDB {
     private final org.rocksdb.RocksDB rocksDB;
@@ -25,6 +31,27 @@ public class RocksDB {
 
         try {
             rocksDB = org.rocksdb.RocksDB.open(options, path);
+        } catch (RocksDBException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public <T> T get(byte[] key, Class<T> clazz) {
+        try {
+            byte[] data = rocksDB.get(key);
+            if (data == null) {
+                throw new NoSuchElementException(new String(key, UTF_8));
+            }
+            return KryoUtils.deserialize(data, clazz);
+        } catch (RocksDBException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public <T> void put(byte[] key, T value) {
+        Preconditions.checkArgument(value != null, "Null values are not allowed.");
+        try {
+            rocksDB.put(key, KryoUtils.serialize(value));
         } catch (RocksDBException e) {
             throw new RuntimeException(e);
         }

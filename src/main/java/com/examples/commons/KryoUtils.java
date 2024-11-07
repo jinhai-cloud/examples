@@ -19,7 +19,7 @@ public class KryoUtils {
         }
     };
 
-    public static <T extends Serializable> byte[] serialize(T object) {
+    public static <T> byte[] serialize(T object) {
         Kryo kryo = kryoPool.obtain();
         try {
             Output output = new Output(4096);
@@ -31,7 +31,7 @@ public class KryoUtils {
         }
     }
 
-    public static <T extends Serializable> void serialize(T object, OutputStream outputStream) {
+    public static <T> void serialize(T object, OutputStream outputStream) {
         Kryo kryo = kryoPool.obtain();
         try {
             Output output = new Output(outputStream);
@@ -42,7 +42,7 @@ public class KryoUtils {
         }
     }
 
-    public static <T extends Serializable> T deserialize(byte[] bytes, Class<T> clazz) {
+    public static <T> T deserialize(byte[] bytes, Class<T> clazz) {
         Kryo kryo = kryoPool.obtain();
         try {
             Input input = new Input(bytes);
@@ -54,7 +54,7 @@ public class KryoUtils {
         }
     }
 
-    public static <T extends Serializable> T deserialize(InputStream inputStream, Class<T> clazz) {
+    public static <T> T deserialize(InputStream inputStream, Class<T> clazz) {
         Kryo kryo = kryoPool.obtain();
         try {
             Input input = new Input(inputStream);
