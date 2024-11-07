@@ -1,13 +1,11 @@
 package com.examples.commons;
 
 import java.io.IOException;
-import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.rocksdb.*;
 
 import com.google.common.base.Preconditions;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class RocksDB {
     private final org.rocksdb.RocksDB rocksDB;
@@ -40,10 +38,7 @@ public class RocksDB {
     public <T> T get(byte[] key, Class<T> clazz) {
         try {
             byte[] data = rocksDB.get(key);
-            if (data == null) {
-                throw new NoSuchElementException(new String(key, UTF_8));
-            }
-            return KryoUtils.deserialize(data, clazz);
+            return Objects.nonNull(data) ? KryoUtils.deserialize(data, clazz) : null;
         } catch (RocksDBException e) {
             throw new RuntimeException(e);
         }
