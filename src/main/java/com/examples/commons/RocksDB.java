@@ -14,6 +14,9 @@ public class RocksDB {
         org.rocksdb.RocksDB.loadLibrary();
     }
 
+    /**
+     * <a href="https://github.com/apache/spark/pull/35034">SPARK-37755</a>
+     */
     public RocksDB(String path) throws IOException {
         BloomFilter fullFilter = new BloomFilter(10.0D, false);
         BlockBasedTableConfig tableFormatConfig = new BlockBasedTableConfig()
