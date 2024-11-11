@@ -30,6 +30,10 @@ public class ExceptionExample {
         try {
             throwInterruptedException();
         } catch (InterruptedException e) {
+            // 当线程捕获到 InterruptedException 后，线程的中断状态会被清除
+            // 如果希望在处理完异常后，线程仍然能够检查到中断状态，就需要调用 Thread.currentThread().interrupt() 重新设置中断标记
+            // 线程重新设置中断标记后，后续的阻塞操作会响应 interrupt 请求，抛出 InterruptedException，达到 Thread stop 效果
+            // 阻塞操作，比如 Future.get、sleep、wait等
             Thread.currentThread().interrupt();
             throw new UncheckedInterruptedException(e);
         }
