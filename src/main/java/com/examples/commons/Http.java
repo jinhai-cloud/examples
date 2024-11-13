@@ -18,6 +18,7 @@ public class Http {
 
     static {
         client = new OkHttpClient.Builder()
+                .addInterceptor(new SentinelOkHttpInterceptor())
                 .connectionPool(new ConnectionPool(256, 300, TimeUnit.SECONDS))
                 .connectTimeout(Duration.ofMillis(1000))
                 .readTimeout(Duration.ofMillis(1000))
