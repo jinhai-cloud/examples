@@ -54,7 +54,7 @@ public class SentinelExample {
                     .setGrade(CircuitBreakerStrategy.ERROR_RATIO.getType())
                     .setCount(0.7) // 熔断阈值
                     .setTimeWindow(30) // 熔断时长 s
-                    .setMinRequestAmount(30) // 熔断触发的最小请求数
+                    .setMinRequestAmount(100) // 熔断触发的最小请求数
                     .setStatIntervalMs(30000); // 统计时长 ms
             rules.add(rule);
         }
