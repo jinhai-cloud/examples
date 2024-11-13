@@ -19,14 +19,14 @@ public class SentinelExample {
 
     @Test
     void rule() {
-        initFlowQpsRule();
+        initFlowRule();
         initDegradeRule();
     }
 
     /**
      * 流量控制规则
      */
-    private void initFlowQpsRule() {
+    private void initFlowRule() {
         List<String> resources = new ArrayList<>();
         resources.add("");
 
