@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.alibaba.csp.sentinel.*;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.alibaba.csp.sentinel.slots.block.SentinelRpcException;
 import com.examples.exceptions.HttpException;
 
 import okhttp3.Connection;
@@ -40,6 +39,6 @@ public class SentinelOkHttpInterceptor implements Interceptor {
 
     private Response handle(Request request, Connection connection, BlockException e) {
         // Just wrap and throw the exception.
-        throw new SentinelRpcException(e);
+        throw new HttpException(Placeholder.format("Request {} degraded", request.url()), e);
     }
 }
