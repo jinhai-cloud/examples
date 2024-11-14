@@ -2,19 +2,15 @@ package com.examples.commons;
 
 import javax.sql.DataSource;
 
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.simple.JdbcClient;
 
-import com.google.common.base.Supplier;
-import com.google.common.base.Suppliers;
 import com.zaxxer.hikari.HikariDataSource;
 
 public class Jdbc {
+    private static final JdbcClient JDBC_CLIENT = JdbcClient.create(initDataSource());
 
-    private static final Supplier<NamedParameterJdbcTemplate> jdbcTemplateSupplier =
-            Suppliers.memoize(() -> new NamedParameterJdbcTemplate(initDataSource()));
-
-    public static NamedParameterJdbcTemplate getJdbcTemplate() {
-        return jdbcTemplateSupplier.get();
+    public static JdbcClient getClient() {
+        return JDBC_CLIENT;
     }
 
     private static DataSource initDataSource() {
