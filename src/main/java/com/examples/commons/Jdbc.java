@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.simple.JdbcClient;
 
+import com.mysql.cj.conf.PropertyDefinitions;
 import com.zaxxer.hikari.HikariDataSource;
 
 public class Jdbc {
@@ -14,6 +15,11 @@ public class Jdbc {
     }
 
     private static DataSource initDataSource() {
-        return new HikariDataSource();
+        System.setProperty(PropertyDefinitions.SYSP_disableAbandonedConnectionCleanup, "true");
+        HikariDataSource dataSource = new HikariDataSource();
+        // show variables like 'wait_timeout%'
+        dataSource.setMaxLifetime(28800000);
+        dataSource.setMaximumPoolSize(16);
+        return dataSource;
     }
 }
