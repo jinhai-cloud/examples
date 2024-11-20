@@ -18,7 +18,7 @@ public class Jdbc {
         System.setProperty(PropertyDefinitions.SYSP_disableAbandonedConnectionCleanup, "true");
         HikariDataSource dataSource = new HikariDataSource();
         // show variables like 'wait_timeout%'
-        dataSource.setMaxLifetime(28800000);
+        dataSource.setMaxLifetime(25000000);
         dataSource.setMaximumPoolSize(16);
         return dataSource;
     }
