@@ -19,31 +19,31 @@
     <jackson.version>2.15.3</jackson.version>
     <json-path.version>2.9.0</json-path.version>
     <json-smart.version>2.5.0</json-smart.version>
-    <kryo.version>5.6.2</kryo.version>
     <joda-time.version>2.12.5</joda-time.version>
-    <netty.version>4.1.112.Final</netty.version>
-    <sentinel.version>1.8.8</sentinel.version>
-    <failsafe.version>3.3.2</failsafe.version>
-    <resilience4j.version>2.2.0</resilience4j.version>
     <caffeine.version>3.1.8</caffeine.version>
     <lettuce.version>6.2.7.RELEASE</lettuce.version>
-    <fastutil.version>8.5.13</fastutil.version>
-    <bson.version>5.1.4</bson.version>
-    <java-uuid-generator.version>5.1.0</java-uuid-generator.version>
     <okhttp.version>4.12.0</okhttp.version>
-    <mustache.version>0.9.14</mustache.version>
-    <hutool.version>5.8.25</hutool.version>
-    <rocksdb.version>9.7.3</rocksdb.version>
-    <disruptor.version>4.0.0</disruptor.version>
-    <snakeyaml.version>2.3</snakeyaml.version>
-    <byte-buddy.version>1.14.19</byte-buddy.version>
-    <roaringbitmap.version>1.2.1</roaringbitmap.version>
-    <groovy.version>3.0.22</groovy.version>
     <spring.version>6.1.12</spring.version>
     <spring-boot.version>3.3.3</spring-boot.version>
     <spring-ai.version>1.0.0-M3</spring-ai.version>
-    <hikaricp.version>6.0.0</hikaricp.version>
+    <sentinel.version>1.8.8</sentinel.version>
+    <failsafe.version>3.3.2</failsafe.version>
+    <resilience4j.version>2.2.0</resilience4j.version>
+    <kryo.version>5.6.2</kryo.version>
+    <netty.version>4.1.112.Final</netty.version>
+    <hutool.version>5.8.25</hutool.version>
+    <fastutil.version>8.5.13</fastutil.version>
+    <mustache.version>0.9.14</mustache.version>
+    <rocksdb.version>9.7.3</rocksdb.version>
+    <disruptor.version>4.0.0</disruptor.version>
+    <snakeyaml.version>2.3</snakeyaml.version>
+    <roaringbitmap.version>1.2.1</roaringbitmap.version>
+    <bson.version>5.1.4</bson.version>
+    <java-uuid-generator.version>5.1.0</java-uuid-generator.version>
+    <byte-buddy.version>1.14.19</byte-buddy.version>
+    <groovy.version>3.0.22</groovy.version>
     <mysql-connector.version>8.4.0</mysql-connector.version>
+    <hikaricp.version>6.0.0</hikaricp.version>
     <jmh.version>1.37</jmh.version>
     <log4j.version>2.23.1</log4j.version>
     <junit.version>5.10.0</junit.version>
@@ -114,37 +114,9 @@
     </dependency>
 
     <dependency>
-      <groupId>com.esotericsoftware</groupId>
-      <artifactId>kryo</artifactId>
-      <version>${kryo.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>joda-time</groupId>
       <artifactId>joda-time</artifactId>
       <version>${joda-time.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-all</artifactId>
-      <version>${netty.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.alibaba.csp</groupId>
-      <artifactId>sentinel-core</artifactId>
-      <version>${sentinel.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>dev.failsafe</groupId>
-      <artifactId>failsafe</artifactId>
-      <version>${failsafe.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.github.resilience4j</groupId>
-      <artifactId>resilience4j-all</artifactId>
-      <version>${resilience4j.version}</version>
     </dependency>
 
     <dependency>
@@ -152,10 +124,17 @@
       <artifactId>caffeine</artifactId>
       <version>${caffeine.version}</version>
     </dependency>
+
     <dependency>
       <groupId>io.lettuce</groupId>
       <artifactId>lettuce-core</artifactId>
       <version>${lettuce.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>${okhttp.version}</version>
     </dependency>
 
     <dependency>
@@ -168,6 +147,11 @@
           <artifactId>spring-boot-starter-logging</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${spring.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -193,45 +177,49 @@
     </dependency>
 
     <dependency>
-      <groupId>it.unimi.dsi</groupId>
-      <artifactId>fastutil</artifactId>
-      <version>${fastutil.version}</version>
-    </dependency>
-
-    <!-- ObjectId -->
-    <dependency>
-      <groupId>org.mongodb</groupId>
-      <artifactId>bson</artifactId>
-      <version>${bson.version}</version>
+      <groupId>com.alibaba.csp</groupId>
+      <artifactId>sentinel-core</artifactId>
+      <version>${sentinel.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.uuid</groupId>
-      <artifactId>java-uuid-generator</artifactId>
-      <version>${java-uuid-generator.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>dev.failsafe</groupId>
+      <artifactId>failsafe</artifactId>
+      <version>${failsafe.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.resilience4j</groupId>
+      <artifactId>resilience4j-all</artifactId>
+      <version>${resilience4j.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>com.squareup.okhttp3</groupId>
-      <artifactId>okhttp</artifactId>
-      <version>${okhttp.version}</version>
+      <groupId>com.esotericsoftware</groupId>
+      <artifactId>kryo</artifactId>
+      <version>${kryo.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>com.github.spullara.mustache.java</groupId>
-      <artifactId>compiler</artifactId>
-      <version>${mustache.version}</version>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId>
+      <version>${netty.version}</version>
     </dependency>
 
     <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-all</artifactId>
       <version>${hutool.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>it.unimi.dsi</groupId>
+      <artifactId>fastutil</artifactId>
+      <version>${fastutil.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.github.spullara.mustache.java</groupId>
+      <artifactId>compiler</artifactId>
+      <version>${mustache.version}</version>
     </dependency>
 
     <dependency>
@@ -253,15 +241,33 @@
     </dependency>
 
     <dependency>
-      <groupId>net.bytebuddy</groupId>
-      <artifactId>byte-buddy</artifactId>
-      <version>${byte-buddy.version}</version>
-    </dependency>
-
-    <dependency>
       <groupId>org.roaringbitmap</groupId>
       <artifactId>RoaringBitmap</artifactId>
       <version>${roaringbitmap.version}</version>
+    </dependency>
+
+    <!-- ObjectId -->
+    <dependency>
+      <groupId>org.mongodb</groupId>
+      <artifactId>bson</artifactId>
+      <version>${bson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.uuid</groupId>
+      <artifactId>java-uuid-generator</artifactId>
+      <version>${java-uuid-generator.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>net.bytebuddy</groupId>
+      <artifactId>byte-buddy</artifactId>
+      <version>${byte-buddy.version}</version>
     </dependency>
 
     <dependency>
@@ -271,31 +277,14 @@
     </dependency>
 
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-jdbc</artifactId>
-      <version>${spring.version}</version>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <version>${mysql-connector.version}</version>
     </dependency>
     <dependency>
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP</artifactId>
       <version>${hikaricp.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.mysql</groupId>
-      <artifactId>mysql-connector-j</artifactId>
-      <version>${mysql-connector.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>${log4j.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j2-impl</artifactId>
-      <version>${log4j.version}</version>
     </dependency>
 
     <dependency>
@@ -307,6 +296,17 @@
       <groupId>org.openjdk.jmh</groupId>
       <artifactId>jmh-generator-annprocess</artifactId>
       <version>${jmh.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>${log4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j2-impl</artifactId>
+      <version>${log4j.version}</version>
     </dependency>
 
     <dependency>
