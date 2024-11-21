@@ -49,6 +49,7 @@
     <junit.version>5.10.0</junit.version>
     <awaitility.version>4.2.1</awaitility.version>
     <lombok.version>1.18.30</lombok.version>
+    <mapstruct.version>1.6.3</mapstruct.version>
 
     <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
     <spotless-maven-plugin.version>2.43.0</spotless-maven-plugin.version>
@@ -325,6 +326,17 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct</artifactId>
+      <version>${mapstruct.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.mapstruct</groupId>
+      <artifactId>mapstruct-processor</artifactId>
+      <version>${mapstruct.version}</version>
     </dependency>
   </dependencies>
 
