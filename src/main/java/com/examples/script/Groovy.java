@@ -4,6 +4,7 @@ import java.security.PrivilegedAction;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.collections4.MapUtils;
@@ -12,6 +13,7 @@ import org.codehaus.groovy.ast.stmt.DoWhileStatement;
 import org.codehaus.groovy.ast.stmt.ForStatement;
 import org.codehaus.groovy.ast.stmt.WhileStatement;
 import org.codehaus.groovy.control.CompilerConfiguration;
+import org.codehaus.groovy.control.customizers.ASTTransformationCustomizer;
 import org.codehaus.groovy.control.customizers.ImportCustomizer;
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer;
 import org.codehaus.groovy.runtime.InvokerHelper;
@@ -26,6 +28,8 @@ import com.jayway.jsonpath.JsonPath;
 
 import groovy.lang.Binding;
 import groovy.lang.GroovyClassLoader;
+import groovy.transform.ThreadInterrupt;
+import groovy.transform.TimedInterrupt;
 
 public final class Groovy {
     private static final Cache<ScriptKey, Class<?>> CACHE =
@@ -57,7 +61,7 @@ public final class Groovy {
     }
 
     private static String generateScriptName(String name) {
-        return "Script_" + name + "_" + counter.incrementAndGet() + ".groovy";
+        return "Script_" + name + "_" + counter.getAndIncrement() + ".groovy";
     }
 
     private static GroovyClassLoader getClassLoader() {
@@ -70,6 +74,10 @@ public final class Groovy {
 
         CompilerConfiguration config = new CompilerConfiguration();
         config.addCompilationCustomizers(secure);
+
+        config.addCompilationCustomizers(new ASTTransformationCustomizer(ThreadInterrupt.class));
+        config.addCompilationCustomizers(new ASTTransformationCustomizer(
+                Map.of("unit", TimeUnit.MILLISECONDS, "value", 1000), TimedInterrupt.class));
 
         ImportCustomizer customizers = new ImportCustomizer();
         customizers.addImports(
