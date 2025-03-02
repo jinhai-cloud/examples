@@ -35,14 +35,15 @@ public class RAGExample {
         // 配置大模型参数
         OpenAiApi openAiApi = new OpenAiApi(baseUrl, apiKey);
         OpenAiChatOptions options = OpenAiChatOptions.builder()
-                .withModel(OpenAiApi.ChatModel.GPT_4_O_MINI)
-                .withTemperature(0.7)
+                .model(OpenAiApi.ChatModel.GPT_4_O_MINI)
+                .temperature(0.7)
                 .build();
         ChatClient chatClient =
                 ChatClient.builder(new OpenAiChatModel(openAiApi, options)).build();
 
         // 配置VectorStore
-        VectorStore vectorStore = new SimpleVectorStore(new OpenAiEmbeddingModel(openAiApi));
+        VectorStore vectorStore =
+                SimpleVectorStore.builder(new OpenAiEmbeddingModel(openAiApi)).build();
 
         // 读取知识库，embedding并保存到VectorStore
         FileSystemResource resource = new FileSystemResource(path);

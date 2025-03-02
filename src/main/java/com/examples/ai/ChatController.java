@@ -9,8 +9,6 @@ import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.examples.commons.JSON;
-
 import reactor.core.publisher.Flux;
 
 @RestController
@@ -33,7 +31,7 @@ public class ChatController {
                 .map(chatResponse -> ServerSentEvent.<String>builder()
                         .id(sessionId)
                         .event("message")
-                        .data(JSON.toJSONString(chatResponse.getResult()))
+                        .data(chatResponse.getResult().getOutput().getText())
                         .build());
     }
 }
