@@ -1,4 +1,4 @@
-package com.examples.ai;
+package com.examples.llm;
 
 import java.util.List;
 

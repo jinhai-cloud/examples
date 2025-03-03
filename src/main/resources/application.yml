@@ -1,10 +1,11 @@
 server:
   port: 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
 spring:
   ai:
     openai:
-      api-key: sk-3DRp9oFqDQEdkxPLuHRzJoNEx9IPSqWbZWRGMvHdG4cVmY91
+      api-key:
       base-url: https://api.chatanywhere.tech
-      chat:
-        options:
-          model: gpt-4o-mini
