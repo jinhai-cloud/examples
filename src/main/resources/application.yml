@@ -7,5 +7,5 @@ server:
 spring:
   ai:
     openai:
-      api-key:
+      api-key: ${API_KEY}
       base-url: https://api.chatanywhere.tech
