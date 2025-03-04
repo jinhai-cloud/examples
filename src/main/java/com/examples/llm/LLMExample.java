@@ -1,9 +1,7 @@
 package com.examples.llm;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.Base64;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -68,8 +66,12 @@ public class LLMExample {
                         .height(1024)
                         .width(1024)
                         .build());
-        String imageUrl = imageModel.call(imagePrompt).getResult().getOutput().getUrl();
-        return String.format("<img src='%s' alt='%s' />", imageUrl, message);
+
+        String html = """
+                <img src="data:image/png;base64,%s" alt="%s" />
+                """;
+        return String.format(
+                html, imageModel.call(imagePrompt).getResult().getOutput().getB64Json(), message);
     }
 
     @GetMapping("/asr")
@@ -87,7 +89,7 @@ public class LLMExample {
     }
 
     @GetMapping("/tts")
-    public String tts(@RequestParam(defaultValue = "兄弟们，今天又是躺平的一天") String message) throws IOException {
+    public String tts(@RequestParam(defaultValue = "兄弟们，今天又是躺平的一天") String message) {
         OpenAiAudioSpeechOptions speechOptions = OpenAiAudioSpeechOptions.builder()
                 .model(OpenAiAudioApi.TtsModel.TTS_1.getValue())
                 .voice(OpenAiAudioApi.SpeechRequest.Voice.ALLOY)
@@ -97,8 +99,11 @@ public class LLMExample {
 
         SpeechPrompt speechPrompt = new SpeechPrompt(message, speechOptions);
         byte[] output = this.ttsModel.call(speechPrompt).getResult().getOutput();
-        FileUtils.writeByteArrayToFile(new File("/Users/cs/LLM/tts.mp3"), output);
-        return "SUCCESS";
+
+        String html = """
+                <audio controls src="data:audio/mp3;base64,%s" />
+                """;
+        return String.format(html, Base64.getEncoder().encodeToString(output));
     }
 
     @GetMapping("/ttsflow")
