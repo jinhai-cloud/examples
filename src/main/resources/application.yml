@@ -1,11 +1,15 @@
 server:
-  port: 8080
+  port: 9527
   servlet:
     encoding:
       charset: UTF-8
       force: true
 spring:
+  application:
+    name: examples
   ai:
     openai:
-      api-key: ${API_KEY}
+      api-key: ${OPENAI_API_KEY}
       base-url: https://api.chatanywhere.tech
+    dashscope:
+      api-key: ${DASHSCOPE_API_KEY}
