@@ -14,12 +14,14 @@ import org.springframework.ai.openai.audio.speech.SpeechPrompt;
 import org.springframework.ai.openai.audio.speech.SpeechResponse;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import reactor.core.publisher.Flux;
 
 @RestController
+@RequestMapping("/llm")
 public class LLMExample {
 
     private final OpenAiChatModel chatModel;
@@ -74,7 +76,7 @@ public class LLMExample {
                 html, imageModel.call(imagePrompt).getResult().getOutput().getB64Json(), message);
     }
 
-    @GetMapping("/asr")
+    @GetMapping("/asr/call")
     public String asr() {
         OpenAiAudioTranscriptionOptions transcriptionOptions = OpenAiAudioTranscriptionOptions.builder()
                 .model(OpenAiAudioApi.WhisperModel.WHISPER_1.getValue())
@@ -83,13 +85,14 @@ public class LLMExample {
                 .responseFormat(OpenAiAudioApi.TranscriptResponseFormat.TEXT)
                 .build();
 
+        String path = System.getProperty("user.home") + "/llm/asr.mp3";
         AudioTranscriptionPrompt audioPrompt =
-                new AudioTranscriptionPrompt(new FileSystemResource("/Users/cs/LLM/tts.mp3"), transcriptionOptions);
+                new AudioTranscriptionPrompt(new FileSystemResource(path), transcriptionOptions);
         return asrModel.call(audioPrompt).getResult().getOutput();
     }
 
-    @GetMapping("/tts")
-    public String tts(@RequestParam(defaultValue = "兄弟们，今天又是躺平的一天") String message) {
+    @GetMapping("/tts/call")
+    public String ttsCall(@RequestParam(defaultValue = "兄弟们，今天又是躺平的一天") String message) {
         OpenAiAudioSpeechOptions speechOptions = OpenAiAudioSpeechOptions.builder()
                 .model(OpenAiAudioApi.TtsModel.TTS_1.getValue())
                 .voice(OpenAiAudioApi.SpeechRequest.Voice.ALLOY)
@@ -106,8 +109,8 @@ public class LLMExample {
         return String.format(html, Base64.getEncoder().encodeToString(output));
     }
 
-    @GetMapping("/ttsflow")
-    public Flux<SpeechResponse> ttsFlow(@RequestParam(defaultValue = "兄弟们，今天又是躺平的一天") String message) {
+    @GetMapping("/tts/stream")
+    public Flux<SpeechResponse> ttsStream(@RequestParam(defaultValue = "兄弟们，今天又是躺平的一天") String message) {
         OpenAiAudioSpeechOptions speechOptions = OpenAiAudioSpeechOptions.builder()
                 .model(OpenAiAudioApi.TtsModel.TTS_1.getValue())
                 .voice(OpenAiAudioApi.SpeechRequest.Voice.ALLOY)
