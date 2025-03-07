@@ -6,7 +6,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,14 +17,14 @@ import com.alibaba.cloud.ai.dashscope.api.DashScopeApi;
 import com.alibaba.cloud.ai.dashscope.audio.DashScopeSpeechSynthesisModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatOptions;
-import com.alibaba.dashscope.audio.tts.SpeechSynthesisResult;
 import com.alibaba.dashscope.audio.ttsv2.SpeechSynthesisAudioFormat;
 import com.alibaba.dashscope.audio.ttsv2.SpeechSynthesisParam;
 import com.alibaba.dashscope.audio.ttsv2.SpeechSynthesizer;
-import com.alibaba.dashscope.common.ResultCallback;
 import com.alibaba.dashscope.exception.NoApiKeyException;
 
+import io.reactivex.Flowable;
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Flux;
 
 @Slf4j
 @RestController
@@ -70,42 +69,33 @@ public class AudioExample {
     }
 
     @GetMapping("/tts/stream")
-    public void ttsStream(@RequestParam(defaultValue = "给我讲一个笑话") String message) {
+    public void ttsStream(@RequestParam(defaultValue = "给我讲一个笑话") String message) throws NoApiKeyException {
         SpeechSynthesisParam param = SpeechSynthesisParam.builder()
                 .apiKey(API_KEY)
                 .model(TTS_MODEL)
                 .voice(VOICE)
                 .format(SpeechSynthesisAudioFormat.PCM_48000HZ_MONO_16BIT)
                 .build();
-        SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer(param, new ResultCallback<>() {
-            @Override
-            public void onEvent(SpeechSynthesisResult message) {
-                ByteBuffer data = message.getAudioFrame();
-                if (data != null) {
-                    tts.write(data.array(), 0, data.array().length);
-                }
-            }
-
-            @Override
-            public void onComplete() {}
-
-            @Override
-            public void onError(Exception e) {}
-        });
+        SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer(param, null);
 
         Prompt prompt = new Prompt(
                 message,
                 DashScopeChatOptions.builder()
-                        .withModel(DashScopeApi.ChatModel.QWEN_PLUS.getModel())
+                        .withModel(DashScopeApi.ChatModel.QWEN_MAX.getModel())
                         .withEnableSearch(true)
                         .build());
-        this.chatModel.stream(prompt)
-                .doFinally(signal -> speechSynthesizer.streamingComplete())
-                .subscribe(res -> {
-                    String text = res.getResult().getOutput().getText();
-                    if (StringUtils.isNotEmpty(text)) {
-                        log.info("Out: {}", text);
-                        speechSynthesizer.streamingCall(text);
+        Flux<String> chatFlux = this.chatModel.stream(prompt).map(response -> {
+            String text = response.getResult().getOutput().getText();
+            System.out.print(text);
+            return text;
+        });
+
+        speechSynthesizer
+                .streamingCallAsFlowable(Flowable.fromPublisher(chatFlux))
+                .blockingForEach(result -> {
+                    ByteBuffer data = result.getAudioFrame();
+                    if (data != null) {
+                        tts.write(data.array(), 0, data.array().length);
                     }
                 });
     }
