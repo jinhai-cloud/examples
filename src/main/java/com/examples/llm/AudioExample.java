@@ -23,6 +23,7 @@ import com.alibaba.dashscope.audio.ttsv2.SpeechSynthesisAudioFormat;
 import com.alibaba.dashscope.audio.ttsv2.SpeechSynthesisParam;
 import com.alibaba.dashscope.audio.ttsv2.SpeechSynthesizer;
 import com.alibaba.dashscope.common.ResultCallback;
+import com.alibaba.dashscope.exception.NoApiKeyException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,7 +53,7 @@ public class AudioExample {
     }
 
     @GetMapping("/tts/call")
-    public void ttsCall(@RequestParam(defaultValue = "给我讲一个笑话") String message) {
+    public void ttsCall(@RequestParam(defaultValue = "给我讲一个笑话") String message) throws NoApiKeyException {
         SpeechSynthesisParam param = SpeechSynthesisParam.builder()
                 .apiKey(API_KEY)
                 .model(TTS_MODEL)
@@ -60,8 +61,12 @@ public class AudioExample {
                 .format(SpeechSynthesisAudioFormat.PCM_48000HZ_MONO_16BIT)
                 .build();
         SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer(param, null);
-        ByteBuffer data = speechSynthesizer.call(message);
-        tts.write(data.array(), 0, data.array().length);
+        speechSynthesizer.callAsFlowable(message).blockingForEach(result -> {
+            ByteBuffer data = result.getAudioFrame();
+            if (data != null) {
+                tts.write(data.array(), 0, data.array().length);
+            }
+        });
     }
 
     @GetMapping("/tts/stream")
