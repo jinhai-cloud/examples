@@ -11,5 +11,3 @@ spring:
     openai:
       api-key: ${OPENAI_API_KEY}
       base-url: https://api.chatanywhere.tech
-    dashscope:
-      api-key: ${DASHSCOPE_API_KEY}
