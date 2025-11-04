@@ -21,6 +21,7 @@
     <joda-time.version>2.12.5</joda-time.version>
     <caffeine.version>3.1.8</caffeine.version>
     <lettuce.version>6.5.5.RELEASE</lettuce.version>
+    <dotenv.version>3.2.0</dotenv.version>
     <okhttp.version>4.12.0</okhttp.version>
     <spring.version>6.2.2</spring.version>
     <spring-boot.version>3.4.7</spring-boot.version>
@@ -130,6 +131,12 @@
       <groupId>io.lettuce</groupId>
       <artifactId>lettuce-core</artifactId>
       <version>${lettuce.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.github.cdimascio</groupId>
+      <artifactId>dotenv-java</artifactId>
+      <version>${dotenv.version}</version>
     </dependency>
 
     <dependency>
