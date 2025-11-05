@@ -3,10 +3,7 @@ package com.examples.commons;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.TimeZone;
+import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,6 +18,12 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.google.common.base.Preconditions;
+import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.Option;
+import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
+import com.jayway.jsonpath.spi.json.JsonProvider;
+import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
+import com.jayway.jsonpath.spi.mapper.MappingProvider;
 
 public final class JSON {
     private static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
@@ -36,6 +39,25 @@ public final class JSON {
             .build();
 
     private JSON() {}
+
+    public static void initJsonPathConfig() {
+        Configuration.setDefaults(new Configuration.Defaults() {
+            @Override
+            public JsonProvider jsonProvider() {
+                return new JacksonJsonProvider(MAPPER);
+            }
+
+            @Override
+            public Set<Option> options() {
+                return EnumSet.of(Option.DEFAULT_PATH_LEAF_TO_NULL, Option.SUPPRESS_EXCEPTIONS);
+            }
+
+            @Override
+            public MappingProvider mappingProvider() {
+                return new JacksonMappingProvider(MAPPER);
+            }
+        });
+    }
 
     public static ObjectNode createJSONObject() {
         return MAPPER.createObjectNode();
