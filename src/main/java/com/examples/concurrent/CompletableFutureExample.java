@@ -180,7 +180,7 @@ public class CompletableFutureExample {
             } else {
                 if (result < 0.3) {
                     cf.complete("低");
-                } else if (result > 0.3 & result < 0.7) {
+                } else if (result > 0.3 && result < 0.7) {
                     cf.complete("中");
                 } else if (result > 0.9) {
                     cf.complete("高");
